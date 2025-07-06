@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Audio;
-using static SFXMusic;
 
 public class SFXMusic : MonoBehaviour
 {
@@ -52,7 +51,7 @@ public class SFXMusic : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"»ç¿îµå '{soundName}'¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogWarning($"ì‚¬ìš´ë“œ '{soundName}'ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
         }
     }
 }
