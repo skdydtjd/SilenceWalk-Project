@@ -1,5 +1,5 @@
-# SilenceWalk-Project
-# 2025-1 캡스톤 프로젝트 Script 파일
+## SilenceWalk-Project
+# 2025-1 캡스톤 디자인 프로젝트 Script 파일
 3D Horror, Escape, Puzzle Game
 
 # 개발 기간
