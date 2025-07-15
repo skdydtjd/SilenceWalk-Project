@@ -13,6 +13,7 @@ public class DoorForEnemy : AE_Door
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
+
         if (other.gameObject.CompareTag("Enemy"))
         {
             open = true;
@@ -23,8 +24,11 @@ public class DoorForEnemy : AE_Door
     public override void Start()
     {
         base.Start();
+
         if (obstacle != null)
+        {
             obstacle.enabled = !open; // 초기 설정
+        }
     }
 
     // Update is called once per frame
@@ -50,6 +54,7 @@ public class DoorForEnemy : AE_Door
         {
             open = !open;
         }
+
         if (trig)
         {
             if (open)

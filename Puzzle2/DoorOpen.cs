@@ -65,7 +65,9 @@ public class DoorOpen : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

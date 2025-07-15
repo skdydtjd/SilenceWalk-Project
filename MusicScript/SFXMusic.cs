@@ -18,7 +18,25 @@ public class SFXMusic : MonoBehaviour
     }
 
     public List<sound> sounds = new List<sound>();
-    private Dictionary<string, List<AudioClip>> soundDict;
+    Dictionary<string, List<AudioClip>> soundDict;
+
+    public void Play(string soundName)
+    {
+        if (soundDict.ContainsKey(soundName))
+        {
+            List<AudioClip> clips = soundDict[soundName];
+
+            if (clips.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, clips.Count);
+                SFXSource.PlayOneShot(clips[randomIndex]);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"»ç¿îµå '{soundName}'¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+        }
+    }
 
     void Awake()
     {
@@ -37,21 +55,15 @@ public class SFXMusic : MonoBehaviour
             SFXSource = GetComponent<AudioSource>();
     }
 
-    public void Play(string soundName)
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        if (soundDict.ContainsKey(soundName))
-        {
-            List<AudioClip> clips = soundDict[soundName];
 
-            if (clips.Count > 0)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, clips.Count);
-                SFXSource.PlayOneShot(clips[randomIndex]);
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"ì‚¬ìš´ë“œ '{soundName}'ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
-        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }

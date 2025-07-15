@@ -64,13 +64,16 @@ public class Appearkey : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         coroutineTrigger = false;
+
         if (CameraFollow.Instance.cam != null)
         {
             Maincamera = CameraFollow.Instance.cam;

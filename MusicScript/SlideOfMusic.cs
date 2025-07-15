@@ -8,8 +8,8 @@ public class SlideOfMusic : MonoBehaviour
     public Slider SFXSlider;
     public Slider MouseSpeedSlider;
 
-
-    private void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
         // 기존 설정 불러오기
         bgmSlider.value = PlayerPrefs.GetFloat("BGMVolume", 1f);

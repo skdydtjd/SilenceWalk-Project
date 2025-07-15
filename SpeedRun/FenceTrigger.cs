@@ -6,6 +6,7 @@ public class FenceTrigger : MonoBehaviour
 
     [SerializeField]
     bool nearbyPlayer = false;
+
     [SerializeField]
     bool MoveFence = false;
     bool fenceonPlayed = false;

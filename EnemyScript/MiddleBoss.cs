@@ -50,10 +50,13 @@ public class MiddleBoss : MonoBehaviour
             return;
         }
 
-        if (!isChase || isdead) 
+        if (!isChase || isdead)
+        {
             return;
+        }
 
         Rigidbody otherRb = collision.rigidbody;
+
         if (otherRb != null && !collision.collider.isTrigger)
         {
             // ∏∏æ‡ Kinematic¿Ã∏È ¿·Ω√ ≤®¡‹
@@ -88,6 +91,7 @@ public class MiddleBoss : MonoBehaviour
         {
             isChase = true;
         }
+
         BossAnim.SetTrigger("Chase");
     }
 

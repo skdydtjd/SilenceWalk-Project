@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
         if(StartMenu != null)
         {
             StartMenu.SetActive(false);
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
             FadeImage.color = new Color(0, 0, 0, alpha);
             yield return null;
         }
+
         FadeImage.gameObject.SetActive(false);
     }
 
@@ -223,6 +225,7 @@ public class GameManager : MonoBehaviour
             escSet = true;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+
             if (!StartMenu.activeSelf && !penal.gameObject.activeSelf)
             {
                 EscMenu.SetActive(true);

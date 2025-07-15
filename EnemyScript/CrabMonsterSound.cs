@@ -20,7 +20,6 @@ public class CrabMonsterSound : BazicEnemyAI
         crabSound.Stop();
         crabSound.clip = crabSounds[2];
         crabSound.PlayOneShot(crabSound.clip);
-
     }
 
     public void IdleSound()
@@ -33,7 +32,9 @@ public class CrabMonsterSound : BazicEnemyAI
     public override void GoToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0)
+        {
             return;
+        }
 
         currentPatrolIndex = currentPatrolIndex +direction;
 
@@ -57,6 +58,7 @@ public class CrabMonsterSound : BazicEnemyAI
             isWaiting = true;
             waitTimeAtPatrolPoint = Random.Range(3f, 5f);
             waitTimer = waitTimeAtPatrolPoint;
+
             agent.ResetPath(); // ¿Ãµø ∏ÿ√ﬂ±‚
 
             crab.SetBool("Rest1", true);
@@ -66,6 +68,7 @@ public class CrabMonsterSound : BazicEnemyAI
         if (isWaiting)
         {
             waitTimer -= Time.deltaTime;
+
             if (waitTimer <= 0f)
             {
                 crab.SetBool("Rest1", false);
@@ -80,6 +83,7 @@ public class CrabMonsterSound : BazicEnemyAI
     {
         crab = GetComponent<Animator>();
         crabSound = GetComponent<AudioSource>();
+
         base.Start();
     }
 
@@ -87,6 +91,7 @@ public class CrabMonsterSound : BazicEnemyAI
     public override void Update()
     {
         float distanceToPlayerOfcrab = Vector3.Distance(transform.position, player.transform.position);
+
         base.Update();
 
         if (currentState == State.Chase)

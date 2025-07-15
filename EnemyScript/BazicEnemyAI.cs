@@ -25,12 +25,125 @@ public class BazicEnemyAI : MonoBehaviour
     public float chaseRange = 7f;
     public float loseSightTime = 3f;
 
-    private float loseTimer = 0f;
-    private Vector3 lastSeenPosition;
+    float loseTimer = 0f;
+    Vector3 lastSeenPosition;
 
-    private State lastState = State.Patrol;
+    State lastState = State.Patrol;
 
     protected bool canMove = true;
+
+    public virtual void Patrol()
+    {
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !isWaiting)
+        {
+            // 도착 시 대기 시작
+            isWaiting = true;
+            waitTimeAtPatrolPoint = Random.Range(3f, 5f);
+            waitTimer = waitTimeAtPatrolPoint;
+            agent.ResetPath(); // 이동 멈추기
+        }
+
+        // 대기 중이면 타이머 감소
+        if (isWaiting)
+        {
+            waitTimer -= Time.deltaTime;
+
+            if (waitTimer <= 0f)
+            {
+                isWaiting = false;
+                GoToNextPatrolPoint(); // 다음 순찰 지점으로 이동
+            }
+        }
+    }
+
+    public virtual void GoToNextPatrolPoint()
+    {
+        if (patrolPoints.Length == 0)
+        {
+            return;
+        }
+
+        currentPatrolIndex = Random.Range(0, patrolPoints.Length);
+        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+    }
+
+    public void ChasePlayer(float distanceToPlayer)
+    {
+        if (agent.isOnNavMesh && player != null && agent.enabled)
+        {
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(player.position, path);
+
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                Debug.LogWarning("유효한 경로 없음! 위치: " + player.position);
+            }
+            else
+            {
+                agent.SetDestination(player.position);
+                Debug.Log("추적 중: " + player.position);
+            }
+        }
+
+        if (distanceToPlayer <= chaseRange)
+        {
+            loseTimer = 0f;
+            lastSeenPosition = player.transform.position;
+        }
+        else
+        {
+            loseTimer += Time.deltaTime;
+
+            if (loseTimer >= loseSightTime)
+            {
+                currentState = State.Return;
+
+                if (agent.isOnNavMesh)
+                    agent.SetDestination(lastSeenPosition);
+
+                Debug.Log("플레이어 놓침! 복귀 중...");
+            }
+        }
+    }
+
+    public virtual void ReturnToPatrol()
+    {
+        if (!canMove)
+        {
+            return;
+        }
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.Patrol;
+            GoToNextPatrolPoint();
+            Debug.Log("순찰 복귀");
+        }
+    }
+
+    public void RetryDestination()
+    {
+        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+    }
+
+    bool IsPlayerVisible()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position + Vector3.up, directionToPlayer);
+        RaycastHit hit;
+
+        Debug.DrawRay(transform.position + Vector3.up, directionToPlayer * chaseRange, Color.red);
+
+        if (Physics.Raycast(ray, out hit, chaseRange))
+        {
+            if (hit.transform.CompareTag("Player"))
+            {
+                return true; // 시야에 플레이어 있음
+            }
+        }
+
+        return false; // 장애물에 가려져 있음
+    }
 
     private void Awake()
     {
@@ -92,114 +205,5 @@ public class BazicEnemyAI : MonoBehaviour
                 }
                 break;
         }
-    }
-
-    public virtual void Patrol()
-    {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && !isWaiting)
-        {
-            // 도착 시 대기 시작
-            isWaiting = true;
-            waitTimeAtPatrolPoint = Random.Range(3f, 5f);
-            waitTimer = waitTimeAtPatrolPoint;
-            agent.ResetPath(); // 이동 멈추기
-        }
-
-        // 대기 중이면 타이머 감소
-        if (isWaiting)
-        {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0f)
-            {
-                isWaiting = false;
-                GoToNextPatrolPoint(); // 다음 순찰 지점으로 이동
-            }
-        }
-    }
-
-    public virtual void GoToNextPatrolPoint()
-    {
-        if (patrolPoints.Length == 0) 
-            return;
-
-        currentPatrolIndex = Random.Range(0, patrolPoints.Length);
-        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
-    }
-
-    public void ChasePlayer(float distanceToPlayer)
-    {
-        if (agent.isOnNavMesh && player != null && agent.enabled)
-        {
-            NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(player.position, path);
-
-            if (path.status != NavMeshPathStatus.PathComplete)
-            {
-                Debug.LogWarning("유효한 경로 없음! 위치: " + player.position);
-            }
-            else
-            {
-                agent.SetDestination(player.position);
-                Debug.Log("추적 중: " + player.position);
-            }
-        }
-
-        if (distanceToPlayer <= chaseRange)
-        {
-            loseTimer = 0f;
-            lastSeenPosition = player.transform.position;
-        }
-        else
-        {
-            loseTimer += Time.deltaTime;
-            if (loseTimer >= loseSightTime)
-            {
-                currentState = State.Return;
-
-                if (agent.isOnNavMesh)
-                    agent.SetDestination(lastSeenPosition);
-
-                Debug.Log("플레이어 놓침! 복귀 중...");
-            }
-        }
-    }
-
-    public virtual void ReturnToPatrol()
-    {
-        if (!canMove)
-        {
-            return;
-        }
-
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            currentState = State.Patrol;
-            GoToNextPatrolPoint();
-            Debug.Log("순찰 복귀");
-        }
-    }
-
-    public void RetryDestination()
-    {
-        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
-    }
-
-    bool IsPlayerVisible()
-    {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position + Vector3.up, directionToPlayer);
-        RaycastHit hit;
-
-        Debug.DrawRay(transform.position + Vector3.up, directionToPlayer * chaseRange, Color.red);
-
-        if (Physics.Raycast(ray, out hit, chaseRange))
-        {
-            if (hit.transform.CompareTag("Player"))
-            {
-                return true; // 시야에 플레이어 있음
-            }
-        }
-
-        return false; // 장애물에 가려져 있음
     }
 }

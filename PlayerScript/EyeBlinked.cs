@@ -3,7 +3,7 @@ using UnityEngine;
 public class EyeBlinked : MonoBehaviour
 {
     [SerializeField]
-    private Animator animator;
+    Animator animator;
 
     void Blink()
     {

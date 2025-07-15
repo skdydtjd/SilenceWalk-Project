@@ -7,18 +7,14 @@ public class EnemyBackGroundMusic : MonoBehaviour
     public static EnemyBackGroundMusic Instance;
 
     [SerializeField]
-    private List<BazicEnemyAI> enemies = new List<BazicEnemyAI>();
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
+    List<BazicEnemyAI> enemies = new List<BazicEnemyAI>();
 
     public void RegisterEnemy(BazicEnemyAI enemy)
     {
         if (!enemies.Contains(enemy))
+        {
             enemies.Add(enemy);
+        }
     }
 
     public void CheckEnemyStates()
@@ -26,8 +22,32 @@ public class EnemyBackGroundMusic : MonoBehaviour
         bool anyChasing = enemies.Any(e => e.currentState == BazicEnemyAI.State.Chase);
 
         if (anyChasing)
+        {
             BackGroundMusic.Instance.MonsterMusic();
+        }
         else
+        {
             BackGroundMusic.Instance.ChangeToInGameMusic();
+        }
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }

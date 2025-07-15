@@ -34,6 +34,7 @@ public class CameraSwitch : MonoBehaviour
         yield return StartCoroutine(GameManager.Instance.FadeOut());
 
         maincamera.enabled = false;
+
         foreach (var camera in Puzzlecamera)
         {
             if (camera != null)
@@ -52,6 +53,7 @@ public class CameraSwitch : MonoBehaviour
         yield return StartCoroutine(GameManager.Instance.FadeOut());
 
         maincamera.enabled = true;
+
         foreach (var camera in Puzzlecamera)
         {
             if (camera != null)
@@ -62,11 +64,6 @@ public class CameraSwitch : MonoBehaviour
 
         yield return StartCoroutine(GameManager.Instance.FadeIn());
         isSwitching = false;
-    }
-
-    private void Awake()
-    {
-
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

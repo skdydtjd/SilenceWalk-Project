@@ -11,7 +11,9 @@ public class Puzzle2Manager : MonoBehaviour
     public void CheckPuzzle()
     {
         if (SolvePipe)
+        {
             return;
+        }
 
         bool allCorrect = true;
 

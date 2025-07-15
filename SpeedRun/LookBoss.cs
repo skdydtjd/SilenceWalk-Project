@@ -5,8 +5,9 @@ public class LookBoss : MonoBehaviour
     public Transform boss;
     public float rotationSpeed = 3f;
 
-    private Vector3 lastBossPos;
+    Vector3 lastBossPos;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (boss != null)
@@ -15,6 +16,7 @@ public class LookBoss : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void LateUpdate()
     {
         if (boss == null)

@@ -15,7 +15,7 @@ public class PlayerFootStep : MonoBehaviour
     public List<AudioClip> PrisonRuns = new List<AudioClip>();
     public List<AudioClip> OutsideRuns = new List<AudioClip>();
 
-    private enum Surface
+    enum Surface
     {
         prison,
         outside,
@@ -25,11 +25,11 @@ public class PlayerFootStep : MonoBehaviour
         outsideRun
     }
 
-    private Surface surface;
+    Surface surface;
 
-    private List<AudioClip> currentclipList;
+    List<AudioClip> currentclipList;
 
-    private AudioSource source;
+    AudioSource source;
 
     public void PlayStep()
     {

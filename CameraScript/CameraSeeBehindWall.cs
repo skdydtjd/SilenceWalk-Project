@@ -14,46 +14,12 @@ public class CameraSeeBehindWall : MonoBehaviour
 
     private Dictionary<Renderer, Material[]> originalMaterials = new Dictionary<Renderer, Material[]>();
 
-    void Update()
-    {
-        RestoreMaterials();
-
-        if (player == null || cameraTransform == null) 
-            return;
-
-        Vector3 direction = player.position - cameraTransform.position;
-        float distance = direction.magnitude;
-
-        Ray ray = new Ray(cameraTransform.position, direction);
-        RaycastHit[] hits = Physics.RaycastAll(ray, distance, obstacleMask);
-
-        foreach (RaycastHit hit in hits)
-        {
-            LODGroup lodGroup = hit.collider.GetComponentInParent<LODGroup>();
-            if (lodGroup != null)
-            {
-                foreach (LOD lod in lodGroup.GetLODs())
-                {
-                    foreach (Renderer rend in lod.renderers)
-                    {
-                        if (rend != null)
-                            MakeTransparent(rend);
-                    }
-                }
-            }
-            else
-            {
-                Renderer rend = hit.collider.GetComponent<Renderer>();
-                if (rend != null)
-                    MakeTransparent(rend);
-            }
-        }
-    }
-
     void MakeTransparent(Renderer rend)
     {
         if (!originalMaterials.ContainsKey(rend))
+        {
             originalMaterials[rend] = rend.sharedMaterials;
+        }
 
         Material[] newMats = new Material[rend.sharedMaterials.Length];
 
@@ -79,5 +45,56 @@ public class CameraSeeBehindWall : MonoBehaviour
 
         transparentRenderers.Clear();
         originalMaterials.Clear();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        RestoreMaterials();
+
+        if (player == null || cameraTransform == null)
+        {
+            return;
+        }
+
+        Vector3 direction = player.position - cameraTransform.position;
+        float distance = direction.magnitude;
+
+        Ray ray = new Ray(cameraTransform.position, direction);
+        RaycastHit[] hits = Physics.RaycastAll(ray, distance, obstacleMask);
+
+        foreach (RaycastHit hit in hits)
+        {
+            LODGroup lodGroup = hit.collider.GetComponentInParent<LODGroup>();
+
+            if (lodGroup != null)
+            {
+                foreach (LOD lod in lodGroup.GetLODs())
+                {
+                    foreach (Renderer rend in lod.renderers)
+                    {
+                        if (rend != null)
+                        {
+                            MakeTransparent(rend);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Renderer rend = hit.collider.GetComponent<Renderer>();
+
+                if (rend != null)
+                {
+                    MakeTransparent(rend);
+                }
+            }
+        }
     }
 }

@@ -6,11 +6,13 @@ public class PushableBox : MonoBehaviour
     public Rigidbody rb;
 
     [SerializeField]
-    private bool sendObject = false;
+    bool sendObject = false;
+
     [SerializeField]
-    private bool move = false;
+    bool move = false;
+
     [SerializeField]
-    private bool phycise = true;
+    bool phycise = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,7 +47,9 @@ public class PushableBox : MonoBehaviour
             SFXMusic.Instance.Play("Grab");
 
             if (rb != null)
+            {
                 rb.isKinematic = phycise;
+            }
 
             if (PlayerMove.Instance != null)
             {

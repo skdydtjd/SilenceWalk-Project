@@ -18,13 +18,13 @@ public class GhostSound : BazicEnemyAI
     public float invisibleTime = 3f;
 
     [SerializeField]
-    private float timer;
-    private bool isVisible = true;
-    private bool isFading = false;
+    float timer;
+    bool isVisible = true;
+    bool isFading = false;
 
-    private SkinnedMeshRenderer meshRenderer;
-    private Material ghostMaterial;
-    private float fadeDuration = 1f;
+    SkinnedMeshRenderer meshRenderer;
+    Material ghostMaterial;
+    float fadeDuration = 1f;
 
     float stuckCheckDistance = 1.5f;
 
@@ -120,14 +120,17 @@ public class GhostSound : BazicEnemyAI
             float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
             ghostMaterial.color = new Color(color.r, color.g, color.b, alpha);
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
 
         ghostMaterial.color = new Color(color.r, color.g, color.b, 0f);
         meshRenderer.enabled = false;
 
-        foreach(Collider col in GetComponentsInChildren<Collider>())
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
             col.enabled = false;
+        }
     }
 
     IEnumerator FadeIn()
@@ -135,7 +138,9 @@ public class GhostSound : BazicEnemyAI
         meshRenderer.enabled = true;
 
         foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
             col.enabled = true;
+        }
  
         float elapsedTime = 0f;
         Color color = ghostMaterial.color;
@@ -145,6 +150,7 @@ public class GhostSound : BazicEnemyAI
             float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
             ghostMaterial.color = new Color(color.r, color.g, color.b, alpha);
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
 
@@ -154,7 +160,9 @@ public class GhostSound : BazicEnemyAI
     private IEnumerator FadeInWrapper()
     {
         isFading = true;
+
         yield return StartCoroutine(FadeIn());
+
         isFading = false;
     }
 
@@ -177,6 +185,7 @@ public class GhostSound : BazicEnemyAI
     public override void Update()
     {
         base .Update();
+
         float distanceToPlayerOfGhoul = Vector3.Distance(transform.position, player.transform.position);
 
         if (!agent.pathPending &&
@@ -228,6 +237,7 @@ public class GhostSound : BazicEnemyAI
         }
 
         timer -= Time.deltaTime;
+
         if (timer <= 0f)
         {
             isVisible = !isVisible;

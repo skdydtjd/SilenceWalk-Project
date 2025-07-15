@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Puzzle3GateDoor : AE_Door
 {
+    public override void DoorSound()
+    {
+        SFXMusic.Instance.Play("PrisonDoor");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
@@ -19,10 +24,5 @@ public class Puzzle3GateDoor : AE_Door
         {
             SFXMusic.Instance.Play("DoorLocked");
         }
-    }
-
-    public override void DoorSound()
-    {
-        SFXMusic.Instance.Play("PrisonDoor");
     }
 }

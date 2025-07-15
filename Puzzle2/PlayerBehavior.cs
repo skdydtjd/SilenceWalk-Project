@@ -74,6 +74,7 @@ public class PlayerBehavior : MonoBehaviour
     void TryPickUp()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
+
         foreach (var hit in hits)
         {
             var pipeItem = hit.GetComponent<Pipe>();
@@ -92,7 +93,9 @@ public class PlayerBehavior : MonoBehaviour
         var slot = allPlace[selectPlaceIndex];
 
         if (slot == null)
+        {
             return;
+        }
 
         Vector3 playerPos = transform.position;
         Vector3 slotPos = slot.transform.position;
@@ -101,8 +104,11 @@ public class PlayerBehavior : MonoBehaviour
         slotPos.y = 0f;
 
         float distance = Vector3.Distance(playerPos, slotPos);
+
         if (distance > 2f)
+        {
             return;
+        }
 
         // 회수 로직
         if (slot.installItem != null)
@@ -124,7 +130,9 @@ public class PlayerBehavior : MonoBehaviour
 
         // 배치 로직
         if (haveItem.Count == 0)
+        {
             return;
+        }
 
         GameObject prefab = GetPrefab(haveItem[selectedItemIndex]);
         GameObject newPipe = Instantiate(prefab, slot.transform.position, Quaternion.identity);
@@ -183,8 +191,11 @@ public class PlayerBehavior : MonoBehaviour
 
     void cycleItem()
     {
-        if (haveItem.Count == 0) 
+        if (haveItem.Count == 0)
+        {
             return;
+        }
+
         selectedItemIndex = (selectedItemIndex + 1) % haveItem.Count;
     }
 
@@ -202,8 +213,10 @@ public class PlayerBehavior : MonoBehaviour
 
     void UpdateUI()
     {
-        if (InventoryText == null) 
+        if (InventoryText == null)
+        {
             return;
+        }
 
         string result = "";
 
@@ -218,9 +231,13 @@ public class PlayerBehavior : MonoBehaviour
             for (int i = 0; i < haveItem.Count; i++)
             {
                 if (i == selectedItemIndex)
+                {
                     result += "[" + haveItem[i] + "] ";
+                }
                 else
+                {
                     result += haveItem[i] + " ";
+                }
             }
 
             result += $"\n선택 장소: {selectPlaceIndex + 1}번";
@@ -264,14 +281,25 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) 
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
             SelectPlace(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
             SelectPlace(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
             SelectPlace(2);
-        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
             SelectPlace(3);
+        }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {

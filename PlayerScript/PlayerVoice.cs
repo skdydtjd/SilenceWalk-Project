@@ -33,7 +33,7 @@ public class PlayerVoice : MonoBehaviour
     public situation situ;
 
     [SerializeField]
-    private List<AudioClip> currentclipList;
+    List<AudioClip> currentclipList;
 
     public AudioSource source;
 
@@ -41,8 +41,10 @@ public class PlayerVoice : MonoBehaviour
 
     public void ExerciseVoice(string name)
     {
-        if(source == null)
+        if (source == null)
+        {
             return;
+        }
 
         switch (name)
         {
@@ -50,10 +52,12 @@ public class PlayerVoice : MonoBehaviour
                 source.clip = RunAndPushPlayerSound[Random.Range(0, RunAndPushPlayerSound.Count)];
                 source.PlayOneShot(source.clip);
                 break;
+
             case "Jump":
                 source.clip = JumpSound[Random.Range(0, JumpSound.Count)];
                 source.PlayOneShot(source.clip);
                 break;
+
             case "Gather":
                 source.clip = GatherSound[Random.Range(0, GatherSound.Count)];
                 source.PlayOneShot(source.clip);
@@ -74,6 +78,7 @@ public class PlayerVoice : MonoBehaviour
             case situation.hit:
                 currentclipList = hitSound;
                 break;
+
             case situation.death:
                 currentclipList = DeathSound;
                 break;
@@ -88,8 +93,8 @@ public class PlayerVoice : MonoBehaviour
             {
                 situ = situation.hit;
             }
-
         }
+
         selectStepList();
     }
 

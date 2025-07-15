@@ -174,6 +174,7 @@ public class PlayerMove : MonoBehaviour
         if (0 < hp && hp < 100)
         {
             hp = hp + (2*Time.deltaTime);
+
             if (100 < hp)
             {
                 hp = 100;

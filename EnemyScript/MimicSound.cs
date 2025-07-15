@@ -8,12 +8,13 @@ public class MimicSound : BazicEnemyAI
     public AudioClip sound;
     bool playingsound = false;
 
-    private Movement movement;
+    Movement movement;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
         base.Start();
+
         movement = GetComponent<Movement>();
     }
 

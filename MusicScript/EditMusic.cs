@@ -11,10 +11,10 @@ public class EditMusic : MonoBehaviour
     public AudioSource VoiceSource;
     public AudioSource SFXSource;
 
-    private float bgmvolume = 1f;
-    private float voicevolume = 1f;
-    private float SFXvolume = 1f;
-    private float MouseSpeedValue = 5f;
+    float bgmvolume = 1f;
+    float voicevolume = 1f;
+    float SFXvolume = 1f;
+    float MouseSpeedValue = 5f;
 
     public void SetBGMVolume(float volume)
     {

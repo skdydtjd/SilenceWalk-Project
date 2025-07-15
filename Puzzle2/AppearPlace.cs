@@ -19,11 +19,16 @@ public class AppearPlace : MonoBehaviour
     public bool isCorrect()
     {
         if (installItem == null)
+        {
             return false;
+        }
 
         var itemType = installItem.GetComponent<Pipe>().Type;
+
         if (itemType != requiredType)
+        {
             return false;
+        }
 
         // 오일러 각도로 변환해서 90도 단위 오차만 허용
         Vector3 currentEuler = installItem.transform.rotation.eulerAngles;

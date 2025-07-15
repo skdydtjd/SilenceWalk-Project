@@ -28,7 +28,9 @@ public class SpeedRunTrigger : MonoBehaviour
         var lookScript = LookBoss.GetComponent<LookBoss>();
 
         if (lookScript != null)
+        {
             lookScript.enabled = true;
+        }
 
         yield return StartCoroutine(GameManager.Instance.FadeIn());
 
@@ -43,7 +45,9 @@ public class SpeedRunTrigger : MonoBehaviour
         mainCamera.enabled = true;
 
         if (lookScript != null)
+        {
             lookScript.enabled = false;
+        }
 
         yield return StartCoroutine(GameManager.Instance.FadeIn());
 
