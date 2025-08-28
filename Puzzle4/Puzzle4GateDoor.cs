@@ -11,11 +11,11 @@ public class Puzzle4GateDoor : AE_Door
     // Update is called once per frame
     public override void Update()
     {
-        if (AppearKeyPuzzle4.KeyGatherCount == 2)
+        if (AppearKeyPuzzle4.KeyGatherCount >= 2)
         {
             base.Update();
         }
-        else if (AppearKeyPuzzle4.KeyGatherCount != 2 && Input.GetKeyDown(KeyCode.E) && trig)
+        else if (AppearKeyPuzzle4.KeyGatherCount < 2 && Input.GetKeyDown(KeyCode.E) && trig)
         {
             SFXMusic.Instance.Play("DoorLocked");
         }
