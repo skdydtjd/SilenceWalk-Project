@@ -16,11 +16,11 @@ public class Puzzle3GateDoor : AE_Door
     // Update is called once per frame
     public override void Update()
     {
-        if (Puzzle3UIforPlayer.NumberOfKey == 3)
+        if (Puzzle3UIforPlayer.NumberOfKey >= 3)
         {
             base.Update();
         }
-        else if (Puzzle3UIforPlayer.NumberOfKey != 3 && Input.GetKeyDown(KeyCode.E) && trig)
+        else if (Puzzle3UIforPlayer.NumberOfKey < 3 && Input.GetKeyDown(KeyCode.E) && trig)
         {
             SFXMusic.Instance.Play("DoorLocked");
         }
