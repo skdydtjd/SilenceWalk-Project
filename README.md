@@ -52,3 +52,7 @@ Editor에서는 실행에 문제없었지만 빌드가 안되는 문제가 발�
 Point Light, Spot Light 등 그림자를 생성하는데 비중을 많이 필요로하는 광원들의 Quality를 high에서 Low로 낮추거나 그림자를 아예 생성하지 않게 하기, Shadow Atlas라는 텍스처 해상도의 범위를 높이기 등으로 텍스쳐 해상도를 넘어서지않게 문제를 해결했다.
 
 이를 통해 많은 광원이 있을 경우 모든 광원이 꼭 그림자를 생성해야할 필요가 없음을 느꼈다.
+
+# 플레이 링크
+
+https://play.unity.com/en/games/e9c8bb24-d38b-479f-84be-08c8248e2a82/silencewalk-20250705
