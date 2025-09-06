@@ -2,22 +2,31 @@ using UnityEngine;
 
 public class Puzzle4GateDoor : AE_Door
 {
+    // Å¬¸®¾î ¿©ºÎ º¯¼ö
+    bool canUseDoor = false;
+
+    // ÀúÀåÇÏ°í ºÒ·¯¿Ã ¶§ Å¬¸®¾î ¿©ºÎ ÀçÈ®ÀÎ
+    public void Refresh()
+    {
+        if (AppearKeyPuzzle4.KeyGatherCount >= 2)
+        {
+            canUseDoor = true;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
         base.Start();
-
-        // ì €ìž¥ í›„ ë¶ˆëŸ¬ì˜¬ ì‹œ í´ë¦¬ì–´ ì—¬ë¶€ ë‹¤ì‹œ ì²´í¬
-        if (AppearKeyPuzzle4.KeyGatherCount >= 2)
-        {
-            open = false;
-        }
+        
+        // È®ÀÎ
+        Refresh();
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        if (AppearKeyPuzzle4.KeyGatherCount >= 2)
+        if (AppearKeyPuzzle4.KeyGatherCount >= 2|| canUseDoor)
         {
             base.Update();
         }

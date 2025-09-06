@@ -78,7 +78,9 @@ public class SaveZoon : MonoBehaviour
     {
         yield return StartCoroutine(GameManager.Instance.FadeOut());
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // 씬이 완전히 로드 된 후 불러오기
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        yield return new WaitUntil(() => async.isDone);
 
         LoadGameFunction();
 
@@ -111,6 +113,13 @@ public class SaveZoon : MonoBehaviour
         penal.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(2f);
+
+        var Stage3door = FindAnyObjectByType<Puzzle3GateDoor>();
+        var Stage4door = FindAnyObjectByType<Puzzle4GateDoor>();
+
+        // 클리어 여부 확인
+        Stage3door.Refresh();
+        Stage4door.Refresh();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -154,7 +163,7 @@ public class SaveZoon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        Debug.Log(Application.persistentDataPath);
     }
 
     // Update is called once per frame

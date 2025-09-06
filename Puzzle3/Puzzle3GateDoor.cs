@@ -2,9 +2,21 @@ using UnityEngine;
 
 public class Puzzle3GateDoor : AE_Door
 {
+    // Å¬¸®¾î¿©ºÎ º¯¼ö
+    bool canUseDoor = false;
+
     public override void DoorSound()
     {
         SFXMusic.Instance.Play("PrisonDoor");
+    }
+
+    // ÀúÀåÇÏ°í ºÒ·¯¿Ã ¶§ Å¬¸®¾î ¿©ºÎ ÀçÈ®ÀÎ
+    public void Refresh()
+    {
+        if (Puzzle3UIforPlayer.NumberOfKey >= 3)
+        {
+            canUseDoor = true;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -12,17 +24,14 @@ public class Puzzle3GateDoor : AE_Door
     {
         base.Start();
 
-        // ì €ìž¥ í›„ ë¶ˆëŸ¬ì˜¬ ì‹œ í´ë¦¬ì–´ ì—¬ë¶€ ë‹¤ì‹œ ì²´í¬
-        if (Puzzle3UIforPlayer.NumberOfKey >= 3)
-        {
-             open = false;
-        }
+        // È®ÀÎ
+        Refresh();
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        if (Puzzle3UIforPlayer.NumberOfKey >= 3)
+        if (Puzzle3UIforPlayer.NumberOfKey >= 3 || canUseDoor)
         {
             base.Update();
         }
