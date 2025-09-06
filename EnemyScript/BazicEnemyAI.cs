@@ -36,14 +36,14 @@ public class BazicEnemyAI : MonoBehaviour
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f && !isWaiting)
         {
-            // µµÂø ½Ã ´ë±â ½ÃÀÛ
+            // ë„ì°© ì‹œ ëŒ€ê¸° ì‹œìž‘
             isWaiting = true;
             waitTimeAtPatrolPoint = Random.Range(3f, 5f);
             waitTimer = waitTimeAtPatrolPoint;
-            agent.ResetPath(); // ÀÌµ¿ ¸ØÃß±â
+            agent.ResetPath(); // ì´ë™ ë©ˆì¶”ê¸°
         }
 
-        // ´ë±â ÁßÀÌ¸é Å¸ÀÌ¸Ó °¨¼Ò
+        // ëŒ€ê¸° ì¤‘ì´ë©´ íƒ€ì´ë¨¸ ê°ì†Œ
         if (isWaiting)
         {
             waitTimer -= Time.deltaTime;
@@ -51,7 +51,7 @@ public class BazicEnemyAI : MonoBehaviour
             if (waitTimer <= 0f)
             {
                 isWaiting = false;
-                GoToNextPatrolPoint(); // ´ÙÀ½ ¼øÂû ÁöÁ¡À¸·Î ÀÌµ¿
+                GoToNextPatrolPoint(); // ë‹¤ìŒ ìˆœì°° ì§€ì ìœ¼ë¡œ ì´ë™
             }
         }
     }
@@ -76,12 +76,12 @@ public class BazicEnemyAI : MonoBehaviour
 
             if (path.status != NavMeshPathStatus.PathComplete)
             {
-                Debug.LogWarning("À¯È¿ÇÑ °æ·Î ¾øÀ½! À§Ä¡: " + player.position);
+                Debug.LogWarning("ìœ íš¨í•œ ê²½ë¡œ ì—†ìŒ! ìœ„ì¹˜: " + player.position);
             }
             else
             {
                 agent.SetDestination(player.position);
-                Debug.Log("ÃßÀû Áß: " + player.position);
+                Debug.Log("ì¶”ì  ì¤‘: " + player.position);
             }
         }
 
@@ -101,7 +101,7 @@ public class BazicEnemyAI : MonoBehaviour
                 if (agent.isOnNavMesh)
                     agent.SetDestination(lastSeenPosition);
 
-                Debug.Log("ÇÃ·¹ÀÌ¾î ³õÄ§! º¹±Í Áß...");
+                Debug.Log("í”Œë ˆì´ì–´ ë†“ì¹¨! ë³µê·€ ì¤‘...");
             }
         }
     }
@@ -117,7 +117,7 @@ public class BazicEnemyAI : MonoBehaviour
         {
             currentState = State.Patrol;
             GoToNextPatrolPoint();
-            Debug.Log("¼øÂû º¹±Í");
+            Debug.Log("ìˆœì°° ë³µê·€");
         }
     }
 
@@ -138,11 +138,11 @@ public class BazicEnemyAI : MonoBehaviour
         {
             if (hit.transform.CompareTag("Player"))
             {
-                return true; // ½Ã¾ß¿¡ ÇÃ·¹ÀÌ¾î ÀÖÀ½
+                return true; // ì‹œì•¼ì— í”Œë ˆì´ì–´ ìžˆìŒ
             }
         }
 
-        return false; // Àå¾Ö¹°¿¡ °¡·ÁÁ® ÀÖÀ½
+        return false; // ìž¥ì• ë¬¼ì— ê°€ë ¤ì ¸ ìžˆìŒ
     }
 
     private void Awake()
@@ -157,7 +157,7 @@ public class BazicEnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        if (PlayerMove.Instance !=null)
+        if (PlayerMove.Instance != null)
         {
             player = PlayerMove.Instance.transform;
         }
@@ -187,7 +187,7 @@ public class BazicEnemyAI : MonoBehaviour
                 if (distanceToPlayer <= chaseRange && playerVisible)
                 {
                     currentState = State.Chase;
-                    Debug.Log("ÇÃ·¹ÀÌ¾î ¹ß°ß!");
+                    Debug.Log("í”Œë ˆì´ì–´ ë°œê²¬!");
                 }
                 break;
 
@@ -201,7 +201,7 @@ public class BazicEnemyAI : MonoBehaviour
                 if (distanceToPlayer <= chaseRange && playerVisible)
                 {
                     currentState = State.Chase;
-                    Debug.Log("ÇÃ·¹ÀÌ¾î ¹ß°ß!");
+                    Debug.Log("í”Œë ˆì´ì–´ ë°œê²¬!");
                 }
                 break;
         }
