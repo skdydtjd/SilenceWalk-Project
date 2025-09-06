@@ -11,6 +11,12 @@ public class Puzzle3GateDoor : AE_Door
     public override void Start()
     {
         base.Start();
+
+        // 저장 후 불러올 시 클리어 여부 다시 체크
+        if (Puzzle3UIforPlayer.NumberOfKey >= 3)
+        {
+             open = false;
+        }
     }
 
     // Update is called once per frame
