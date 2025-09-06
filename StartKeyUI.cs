@@ -8,7 +8,7 @@ public class StartKeyUI : MonoBehaviour
     {
         keypenal.SetActive(true);
 
-        Invoke("hidepenal", 8f);
+        Invoke("hidepenal", 10f);
     }
 
     public void hidepenal()
