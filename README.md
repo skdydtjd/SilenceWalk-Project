@@ -12,7 +12,7 @@
 
 # 개발 환경
 
-Unity6, URP, Windows, C#
+Unity6 (6000.0.32f1), URP, Windows, C#
 
 # 개발한 부분
 
