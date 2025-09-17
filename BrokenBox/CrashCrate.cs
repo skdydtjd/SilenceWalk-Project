@@ -5,7 +5,7 @@
     public class CrashCrate : MonoBehaviour
     {
         [Header("Whole Create")]
-        public MeshRenderer wholeCrate;
+        public MeshRenderer wholeCrate; 
         public BoxCollider boxCollider;
         
         [Header("Fractured Create")]
