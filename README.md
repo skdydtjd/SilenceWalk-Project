@@ -22,7 +22,7 @@ Unity6 (6000.0.32f1), URP, Windows, C#
 
 그래픽, 효과음 리소스 - 무료 배포된 에셋 수집 및 활용
 
-(기본 에셋에 포함되어있는 스크립트의 경우 Asset Script로 표시, 에셋에 포함되어있던 스크립트를 프로젝트에 맞게 수정했을 경우 Update Asset Scipt)
+(에셋에 포함되어있던 스크립트를 프로젝트에 맞게 수정했을 경우 Update Script From External Asset)
 
 # 초기 개발 배경
 
