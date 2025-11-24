@@ -27,7 +27,7 @@ public class DoorForEnemy : AE_Door
 
         if (obstacle != null)
         {
-            obstacle.enabled = !open; // ÃÊ±â ¼³Á¤
+            obstacle.enabled = !open; // ì´ˆê¸° ì„¤ì •
         }
     }
 
