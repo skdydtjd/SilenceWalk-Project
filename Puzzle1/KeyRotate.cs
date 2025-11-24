@@ -6,7 +6,7 @@ public class KeyRotate : MonoBehaviour
 
     [SerializeField]
     protected bool trigger = false;
-    public static bool gatheredByPlayer = false; // ¼öÁ¤
+    public static bool gatheredByPlayer = false; // ìˆ˜ì •
 
     protected virtual void OnTriggerStay(Collider other)
     {
