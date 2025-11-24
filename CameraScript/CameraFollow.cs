@@ -34,6 +34,7 @@ public class CameraFollow : MonoBehaviour
 
     public float changeFOVspeed = 5f;
 
+    // 마우스 감도
     public float mouseSensitivity = 5f;
 
     public float currentY = 180;
