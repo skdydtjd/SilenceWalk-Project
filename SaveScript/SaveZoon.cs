@@ -40,13 +40,14 @@ public class SaveZoon : MonoBehaviour
             puzzle3KeyCount = Puzzle3UIforPlayer.NumberOfKey,
             puzzle4KeyCount = AppearKeyPuzzle4.KeyGatherCount,
 
+            // ìŠ¤í…Œì´ì§€2 í¼ì¦ì„ í•´ê²°í•œ í›„ ë¬¸ì´ ì—´ë¦¬ëŠ” ì¹´ë©”ë¼ ì—°ì¶œì„ 1íšŒì„±ìœ¼ë¡œ ë²ˆë³µë˜ì§€ì•Šê²Œ í•˜ê¸° ìœ„í•¨
             savedPuzzle2 = DoorOpen.saved
         };
 
         string json = JsonUtility.ToJson(data,true);
         File.WriteAllText(savePath, json);
 
-        Debug.Log("ÀúÀå ¿Ï·á");
+        Debug.Log("ì €ì¥ ì™„ë£Œ");
 
         SetLoadButtonState(true);
     }
@@ -55,7 +56,7 @@ public class SaveZoon : MonoBehaviour
     {
         if (!File.Exists(savePath))
         {
-            Debug.LogWarning("ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("ì €ì¥ëœ ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -71,14 +72,14 @@ public class SaveZoon : MonoBehaviour
 
         DoorOpen.saved = data.savedPuzzle2;
 
-        Debug.Log("ºÒ·¯¿À±â ¿Ï·á");
+        Debug.Log("ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 
     IEnumerator Load()
     {
         yield return StartCoroutine(GameManager.Instance.FadeOut());
 
-        // ¾ÀÀÌ ¿ÏÀüÈ÷ ·Îµå µÈ ÈÄ ºÒ·¯¿À±â
+        // ì”¬ì´ ì™„ì „íˆ ë¡œë“œ ëœ í›„ ë¶ˆëŸ¬ì˜¤ê¸°
         AsyncOperation async = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         yield return new WaitUntil(() => async.isDone);
 
@@ -117,7 +118,7 @@ public class SaveZoon : MonoBehaviour
         var Stage3door = FindAnyObjectByType<Puzzle3GateDoor>();
         var Stage4door = FindAnyObjectByType<Puzzle4GateDoor>();
 
-        // Å¬¸®¾î ¿©ºÎ È®ÀÎ
+        // í´ë¦¬ì–´ ì—¬ë¶€ í™•ì¸
         Stage3door.Refresh();
         Stage4door.Refresh();
 
