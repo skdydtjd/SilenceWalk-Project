@@ -59,7 +59,7 @@ public class PushableBox : MonoBehaviour
             }
         }
 
-        // ¹Ú½º ÀÌµ¿ Ã³¸®
+        // ë°•ìŠ¤ ì´ë™ ì²˜ë¦¬
         if (move && PlayerMove.Instance.moveVec != Vector3.zero)
         {
             Vector3 movebox = PlayerMove.Instance.transform.position + PlayerMove.Instance.transform.forward * 1.2f;
