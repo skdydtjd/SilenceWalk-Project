@@ -34,7 +34,7 @@ public class SFXMusic : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"»ç¿îµå '{soundName}'¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogWarning($"ì‚¬ìš´ë“œ '{soundName}'ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
         }
     }
 
@@ -52,7 +52,9 @@ public class SFXMusic : MonoBehaviour
         }
 
         if (SFXSource == null)
+        {
             SFXSource = GetComponent<AudioSource>();
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
