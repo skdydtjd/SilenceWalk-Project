@@ -14,7 +14,7 @@
 
 Unity6 (6000.0.32f1), URP, Windows, C#
 
-UnityCinemachine 사용
+UnityCinemachine 활용
 
 # 개발한 부분
 
