@@ -28,6 +28,8 @@ public class GhostSound : BazicEnemyAI
 
     float stuckCheckDistance = 1.5f;
 
+    Coroutine activeFadeCoroutine;
+
     public void GhoulIdleSound()
     {
         currentSound = Random.Range(0, 3);
@@ -53,9 +55,14 @@ public class GhostSound : BazicEnemyAI
 
     public override void Patrol()
     {
+        if(isTraversingLink)
+        {
+            return;
+        }
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f && !isWaiting)
         {
-            // µµÂø ½Ã ´ë±â ½ÃÀÛ
+            // ë„ì°© ì‹œ ëŒ€ê¸° ì‹œì‘
             isWaiting = true;
             waitTimeAtPatrolPoint = Random.Range(5f, 6f);
             waitTimer = waitTimeAtPatrolPoint;
@@ -72,18 +79,18 @@ public class GhostSound : BazicEnemyAI
             }
         }
 
-        // ´ë±â ÁßÀÌ¸é Å¸ÀÌ¸Ó °¨¼Ò
+        // ëŒ€ê¸° ì¤‘ì´ë©´ íƒ€ì´ë¨¸ ê°ì†Œ
         if (isWaiting)
         {
             waitTimer -= Time.deltaTime;
-            agent.ResetPath(); // ÀÌµ¿ ¸ØÃß±â
+            agent.ResetPath(); // ì´ë™ ë©ˆì¶”ê¸°
 
             if (waitTimer <= 0f)
             {
                 Ghoul.SetBool("Idle1",false);
                 Ghoul.SetBool("Idle2",false );
                 isWaiting = false;
-                GoToNextPatrolPoint(); // ´ÙÀ½ ¼øÂû ÁöÁ¡À¸·Î ÀÌµ¿
+                GoToNextPatrolPoint(); // ë‹¤ìŒ ìˆœì°° ì§€ì ìœ¼ë¡œ ì´ë™
             }
         }
     }
@@ -157,13 +164,46 @@ public class GhostSound : BazicEnemyAI
         ghostMaterial.color = new Color(color.r, color.g, color.b, 1f);
     }
 
+    void SafeStartFade(IEnumerator fadeRoutine)
+    {
+        // ê¸°ì¡´ì— ëŒê³  ìˆëŠ” í˜ì´ë“œ ì½”ë£¨í‹´ì´ ìˆë‹¤ë©´ ê·¸ê²ƒë§Œ ë©ˆì¶¤
+        if (activeFadeCoroutine != null)
+        {
+            StopCoroutine(activeFadeCoroutine);
+        }
+        activeFadeCoroutine = StartCoroutine(fadeRoutine);
+    }
+
     private IEnumerator FadeInWrapper()
     {
         isFading = true;
+        isVisible = true;
 
         yield return StartCoroutine(FadeIn());
 
         isFading = false;
+        activeFadeCoroutine = null;
+    }
+
+    void HandleInvisibility()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f)
+        {
+            isVisible = !isVisible;
+
+            if (isVisible)
+            {
+                SafeStartFade(FadeIn());
+            }
+            else
+            {
+                SafeStartFade(FadeOut());
+            }
+
+            timer = isVisible ? visibleTime : invisibleTime;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -184,17 +224,24 @@ public class GhostSound : BazicEnemyAI
     // Update is called once per frame
     public override void Update()
     {
-        base .Update();
+        base.Update();
+
+        if(isTraversingLink)
+        {
+            return;
+        }
 
         float distanceToPlayerOfGhoul = Vector3.Distance(transform.position, player.transform.position);
 
-        if (!agent.pathPending &&
-            agent.remainingDistance <= agent.stoppingDistance &&
-            distanceToPlayerOfGhoul > stuckCheckDistance)
-        {
-            Debug.Log("ÄÚ¾Õ¿¡¼­ ¸ØÃã °¨Áö! ¸ñÀûÁö ´Ù½Ã ¼³Á¤");
-            agent.SetDestination(player.position);
-        }
+        //if (currentState == State.Chase && !agent.pathPending &&
+        //    agent.remainingDistance <= agent.stoppingDistance &&
+        //    distanceToPlayerOfGhoul > stuckCheckDistance)
+        //{
+        //    Debug.Log("ì½”ì•ì—ì„œ ë©ˆì¶¤ ê°ì§€! ëª©ì ì§€ ë‹¤ì‹œ ì„¤ì •");
+
+        //    agent.ResetPath();
+        //    agent.SetDestination(player.position);
+        //}
 
         if (currentState == State.Chase)
         {
@@ -206,9 +253,9 @@ public class GhostSound : BazicEnemyAI
 
             if (!isVisible && !isFading)
             {
-                StopAllCoroutines();
-                StartCoroutine(FadeInWrapper());
-                isVisible = true;
+                // [ë³€ê²½] SafeStartFadeë¥¼ í†µí•´ ê¸°ì¡´ FadeOut ë“±ì„ ëŠê³  ì¦‰ì‹œ ì‹¤í–‰
+                SafeStartFade(FadeInWrapper());
+
                 timer = visibleTime;
 
                 if (!FindPlayer)
@@ -234,20 +281,10 @@ public class GhostSound : BazicEnemyAI
         {
             FindPlayer = false;
             agent.speed = 2;
-        }
+            Ghoul.SetBool("Find", false);
+            Ghoul.SetBool("Attack", false);
 
-        timer -= Time.deltaTime;
-
-        if (timer <= 0f)
-        {
-            isVisible = !isVisible;
-
-            if (isVisible)
-                StartCoroutine(FadeIn());
-            else
-                StartCoroutine(FadeOut());
-
-            timer = isVisible ? visibleTime : invisibleTime;
+            HandleInvisibility();
         }
     }
 }
