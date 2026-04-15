@@ -86,6 +86,21 @@ public class BazicEnemyAI : MonoBehaviour
                 agent.SetDestination(player.position);
                 pathUpdateTimer = pathUpdateInterval;
 
+                // [수정] 플레이어 위치가 아닌, 플레이어 주변 '갈 수 있는 바닥'을 찾음
+                NavMeshHit hit;
+
+                // 1.5f 범위 내에서 가장 가까운 NavMesh 바닥을 찾습니다.
+                if (NavMesh.SamplePosition(player.position, out hit, 1.5f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                }
+                else
+                {
+                    // 바닥을 못 찾을 정도로 플레이어가 이상한 곳에 있다면 추적 중단
+                    currentState = State.Return;
+                    return;
+                }
+
                 // [보완] 경로가 불완전한지 체크 (기존의 CalculatePath 역할을 대신함)
                 if (agent.pathStatus == NavMeshPathStatus.PathPartial)
                 {
