@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,8 +26,12 @@ public class BazicEnemyAI : MonoBehaviour
     public float chaseRange = 7f;
     public float loseSightTime = 3f;
 
-    public float pathUpdateInterval = 0.3f; // 경로 갱신 간격
+    [Header("A: Path Setting")]
+    public float pathUpdateInterval = 0.2f; // 경로 갱신 간격
     private float pathUpdateTimer = 0f;
+
+    [Header("B: Link Setting")]
+    protected bool isTraversingLink= false; // 링크 이동 중인지 체크
 
     float loseTimer = 0f;
     Vector3 lastSeenPosition;
@@ -74,15 +79,13 @@ public class BazicEnemyAI : MonoBehaviour
     {
         if (agent.isOnNavMesh && player != null && agent.enabled)
         {
-            NavMeshPath path = new NavMeshPath();
-            
             pathUpdateTimer -= Time.deltaTime;
-           
+
             if (pathUpdateTimer <= 0f)
             {
                 agent.SetDestination(player.position);
                 pathUpdateTimer = pathUpdateInterval;
-               
+
                 // [보완] 경로가 불완전한지 체크 (기존의 CalculatePath 역할을 대신함)
                 if (agent.pathStatus == NavMeshPathStatus.PathPartial)
                 {
@@ -90,8 +93,9 @@ public class BazicEnemyAI : MonoBehaviour
                     currentState = State.Return; // 상태 변경
                     return; // 아래 추적 로직 실행 방지
                 }
-                
+  
                 Debug.Log("추적 중: " + player.position);
+
             }
         }
 
@@ -155,6 +159,36 @@ public class BazicEnemyAI : MonoBehaviour
         return false; // 장애물에 가려져 있음
     }
 
+    IEnumerator TraverseMeshLink()
+    {
+        isTraversingLink = true;
+
+        // 현재 링크 정보 가져오기
+        OffMeshLinkData data = agent.currentOffMeshLinkData;
+
+        // 시작점과 도착점 설정
+        Vector3 startPos = transform.position;
+        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+
+        float duration = 0.5f; // 이동 시간
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            // Lerp를 이용해 부드럽게 위치 이동
+            transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = endPos;
+        agent.CompleteOffMeshLink(); // 에이전트에게 이동 완료를 알림
+
+        yield return new WaitForFixedUpdate();
+
+        isTraversingLink = false;
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -166,6 +200,9 @@ public class BazicEnemyAI : MonoBehaviour
     public virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        // 에이전트가 링크를 자동으로 타지 않게 설정
+        agent.autoTraverseOffMeshLink = false;
 
         if (PlayerMove.Instance != null)
         {
@@ -179,6 +216,18 @@ public class BazicEnemyAI : MonoBehaviour
 
     public virtual void Update()
     {
+        // 링크 위에 있고 이동 중이 아니라면 코루틴 실행
+        if (agent.isOnOffMeshLink && !isTraversingLink)
+        {
+            StartCoroutine(TraverseMeshLink());
+        }
+
+        // 링크 이동 중에는 아래 로직(Update)을 실행하지 않음
+        if (isTraversingLink)
+        {
+            return;
+        }
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (currentState != lastState)
