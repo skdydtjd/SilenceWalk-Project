@@ -25,6 +25,9 @@ public class BazicEnemyAI : MonoBehaviour
     public float chaseRange = 7f;
     public float loseSightTime = 3f;
 
+    public float pathUpdateInterval = 0.3f; // 경로 갱신 간격
+    private float pathUpdateTimer = 0f;
+
     float loseTimer = 0f;
     Vector3 lastSeenPosition;
 
@@ -72,15 +75,22 @@ public class BazicEnemyAI : MonoBehaviour
         if (agent.isOnNavMesh && player != null && agent.enabled)
         {
             NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(player.position, path);
-
-            if (path.status != NavMeshPathStatus.PathComplete)
-            {
-                Debug.LogWarning("유효한 경로 없음! 위치: " + player.position);
-            }
-            else
+            
+            pathUpdateTimer -= Time.deltaTime;
+           
+            if (pathUpdateTimer <= 0f)
             {
                 agent.SetDestination(player.position);
+                pathUpdateTimer = pathUpdateInterval;
+               
+                // [보완] 경로가 불완전한지 체크 (기존의 CalculatePath 역할을 대신함)
+                if (agent.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    Debug.LogWarning("플레이어에게 가는 경로가 끊겨 있습니다!");
+                    currentState = State.Return; // 상태 변경
+                    return; // 아래 추적 로직 실행 방지
+                }
+                
                 Debug.Log("추적 중: " + player.position);
             }
         }
