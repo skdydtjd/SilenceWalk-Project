@@ -51,7 +51,7 @@ __1. 적 AI의 허점__
 
 ------> 2026.04.16 수정
 
-(AI 툴을 활용하여 코드를 재 검증 중 NevMesh의 autoTraverseOffMeshLink라는 근처에 NevLink가 존재할 경우 경로 계산에 자동으로 포함하는 요소를 확인)
+(AI 툴을 활용하여 코드를 재 검증 중 NevMesh의 autoTraverseOffMeshLink라는 근처에 NevLink가 존재할 경우 경로 계산에 자동으로 권한을 가지는 요소를 확인)
 
 (강제적으로 Link를 타게하는 autoTraverseOffMeshLink를 CheckOFF하고 수동적으로 이동할 수 있도록 AI툴을 활용한 코루틴 코드를 BazicEnemyAI에 추가)
 
