@@ -24,23 +24,23 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        // ¾À ·Îµå ÀÌº¥Æ®¿¡ µî·Ï
+        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì— ë“±ë¡
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnDisable()
     {
-        // ¾À ·Îµå ÀÌº¥Æ®¿¡¼­ ÇØÁ¦
+        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì—ì„œ í•´ì œ
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // ¾ÀÀÌ ·ÎµåµÉ ¶§¸¶´Ù È£ÃâµÊ
+    // ì”¬ì´ ë¡œë“œë  ë•Œë§ˆë‹¤ í˜¸ì¶œë¨
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ¾À ¾È¿¡ ÀÖ´Â Placeµé ´Ù½Ã ÇÒ´ç
+        // ì”¬ ì•ˆì— ìˆëŠ” Placeë“¤ ë‹¤ì‹œ í• ë‹¹
         allPlace = FindObjectsByType<AppearPlace>(FindObjectsSortMode.None).OrderBy(p => p.placeIndex).ToArray();
 
-        // ÀÎº¥Åä¸® UI ´Ù½Ã Ã£±â (Tag³ª ÀÌ¸§À¸·Î Ã£¾Æ¾ß Á¤È®)
+        // ì¸ë²¤í† ë¦¬ UI ë‹¤ì‹œ ì°¾ê¸° (Tagë‚˜ ì´ë¦„ìœ¼ë¡œ ì°¾ì•„ì•¼ ì •í™•)
         InventoryText = GameObject.Find("InventoryText")?.GetComponent<TextMeshProUGUI>();
 
         haveItem.Clear();
@@ -49,10 +49,10 @@ public class PlayerBehavior : MonoBehaviour
 
         InventoryText.alpha = 0f;
 
-        // ½½·Ô ¼±ÅÃ ÃÊ±âÈ­
+        // ìŠ¬ë¡¯ ì„ íƒ ì´ˆê¸°í™”
         SelectPlace(0);
 
-        // UI ¾÷µ¥ÀÌÆ®
+        // UI ì—…ë°ì´íŠ¸
         UpdateUI();
     }
 
@@ -110,7 +110,7 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
 
-        // È¸¼ö ·ÎÁ÷
+        // íšŒìˆ˜ ë¡œì§
         if (slot.installItem != null)
         {
             var item = slot.installItem.GetComponent<Pipe>();
@@ -122,13 +122,13 @@ public class PlayerBehavior : MonoBehaviour
 
             selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, haveItem.Count - 1);
 
-            // ÆÛÁñ Ã¼Å©
+            // í¼ì¦ ì²´í¬
             Puzzle2Manager.Instance.CheckPuzzle();
 
             return;
         }
 
-        // ¹èÄ¡ ·ÎÁ÷
+        // ë°°ì¹˜ ë¡œì§
         if (haveItem.Count == 0)
         {
             return;
@@ -151,7 +151,7 @@ public class PlayerBehavior : MonoBehaviour
         haveItem.RemoveAt(selectedItemIndex);
         selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, haveItem.Count - 1);
 
-        // ÆÛÁñ Ã¼Å©
+        // í¼ì¦ ì²´í¬
         Puzzle2Manager.Instance.CheckPuzzle();
     }
 
@@ -222,17 +222,17 @@ public class PlayerBehavior : MonoBehaviour
 
         if (haveItem.Count == 0)
         {
-            result = "ÆÄÀÌÇÁ°¡ ºñ¾î ÀÖÀ½";
+            result = "íŒŒì´í”„ê°€ ë¹„ì–´ ìˆìŒ";
         }
         else
         {
-            result = "º¸À¯ ¾ÆÀÌÅÛ: ";
+            result = "ë³´ìœ  ì•„ì´í…œ: ";
 
             for (int i = 0; i < haveItem.Count; i++)
             {
                 if (i == selectedItemIndex)
                 {
-                    result += "[" + haveItem[i] + "] ";
+                    result += "[" + haveItem[i] + "]";
                 }
                 else
                 {
@@ -240,7 +240,7 @@ public class PlayerBehavior : MonoBehaviour
                 }
             }
 
-            result += $"\n¼±ÅÃ Àå¼Ò: {selectPlaceIndex + 1}¹ø";
+            result += $"\nì„ íƒ ì¥ì†Œ: {selectPlaceIndex + 1}ë²ˆ";
         }
 
         InventoryText.text = result;

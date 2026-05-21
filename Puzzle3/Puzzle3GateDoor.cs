@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Puzzle3GateDoor : AE_Door
 {
-    // Å¬¸®¾î¿©ºÎ º¯¼ö
+    // í´ë¦¬ì–´ì—¬ë¶€ ë³€ìˆ˜
     bool canUseDoor = false;
 
     public override void DoorSound()
@@ -10,12 +10,16 @@ public class Puzzle3GateDoor : AE_Door
         SFXMusic.Instance.Play("PrisonDoor");
     }
 
-    // ÀúÀåÇÏ°í ºÒ·¯¿Ã ¶§ Å¬¸®¾î ¿©ºÎ ÀçÈ®ÀÎ
+    // ì €ì¥í•˜ê³  ë¶ˆëŸ¬ì˜¬ ë•Œ í´ë¦¬ì–´ ì—¬ë¶€ ì¬í™•ì¸
     public void Refresh()
     {
         if (Puzzle3UIforPlayer.NumberOfKey >= 3)
         {
             canUseDoor = true;
+        }
+        else
+        {
+            Debug.Log("Puzzle3Door ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
         }
     }
 
@@ -24,7 +28,7 @@ public class Puzzle3GateDoor : AE_Door
     {
         base.Start();
 
-        // È®ÀÎ
+        // í™•ì¸
         Refresh();
     }
 

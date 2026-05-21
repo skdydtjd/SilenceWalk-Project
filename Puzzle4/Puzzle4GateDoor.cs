@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class Puzzle4GateDoor : AE_Door
 {
-    // Å¬¸®¾î ¿©ºÎ º¯¼ö
+    // í´ë¦¬ì–´ ì—¬ë¶€ ë³€ìˆ˜
     bool canUseDoor = false;
 
-    // ÀúÀåÇÏ°í ºÒ·¯¿Ã ¶§ Å¬¸®¾î ¿©ºÎ ÀçÈ®ÀÎ
+    // ì €ì¥í•˜ê³  ë¶ˆëŸ¬ì˜¬ ë•Œ í´ë¦¬ì–´ ì—¬ë¶€ ì¬í™•ì¸
     public void Refresh()
     {
         if (AppearKeyPuzzle4.KeyGatherCount >= 2)
         {
             canUseDoor = true;
+        }
+        else
+        {
+            Debug.Log("Puzzle4Door ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
         }
     }
 
@@ -19,7 +23,7 @@ public class Puzzle4GateDoor : AE_Door
     {
         base.Start();
         
-        // È®ÀÎ
+        // í™•ì¸
         Refresh();
     }
 
