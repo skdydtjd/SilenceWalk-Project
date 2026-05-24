@@ -2,6 +2,10 @@
 # 2025-1 캡스톤 디자인 프로젝트 Script 파일
 3D Horror, Escape, Puzzle Game
 
+# 2026.05.24 (수정 Update)
+
+UI Quality UP, DOTween을 이용한 UI 개선 및 Global Vloume를 활용한 PostProcessing 기술로 보다 공포분위기 그래픽을 개선
+
 # 개발 기간
 
 2025.03.18 ~ 2025.06.10
