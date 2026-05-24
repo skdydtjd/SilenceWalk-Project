@@ -4,7 +4,7 @@
 
 # 2026.05.24 (수정 Update)
 
-UI Quality UP, DOTween을 이용한 UI 개선 및 Global Vloume를 활용한 PostProcessing 기술로 보다 공포분위기 그래픽을 개선
+UI Quality UP, (ChatGPT, DOTween)을 이용한 UI 애니메이션 개선 및 Global Vloume를 활용한 PostProcessing 기술로 보다 공포분위기 그래픽을 개선
 
 # 개발 기간
 
