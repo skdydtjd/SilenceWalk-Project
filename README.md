@@ -112,4 +112,4 @@ https://play.unity.com/en/games/7b4b2685-3ecb-4f8d-bb34-e79b9eabbd38/silencewalk
 
 (2026.05.24 Update Version (v3)) (Recent)
 
-https://play.unity.com/en/games/81c0afc5-0e1f-4280-b150-af8df6d3145c/silencewalk-20260524-v3
+(임시)실행버그존재 https://play.unity.com/en/games/81c0afc5-0e1f-4280-b150-af8df6d3145c/silencewalk-20260524-v3
