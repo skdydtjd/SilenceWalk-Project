@@ -13,8 +13,6 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject straightPrefep, CurvePrefeb, LongCurvePrefep, SlashPrefeb;
 
     public TextMeshProUGUI InventoryText;
-    public TextMeshProUGUI keycount;
-    public Image keyImage;
 
     public AppearPlace[] allPlace;
     int selectPlaceIndex = 0;
@@ -24,23 +22,23 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì— ë“±ë¡
+        // ¾À ·Îµå ÀÌº¥Æ®¿¡ µî·Ï
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnDisable()
     {
-        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì—ì„œ í•´ì œ
+        // ¾À ·Îµå ÀÌº¥Æ®¿¡¼­ ÇØÁ¦
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // ì”¬ì´ ë¡œë“œë  ë•Œë§ˆë‹¤ í˜¸ì¶œë¨
+    // ¾ÀÀÌ ·ÎµåµÉ ¶§¸¶´Ù È£ÃâµÊ
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ì”¬ ì•ˆì— ìˆëŠ” Placeë“¤ ë‹¤ì‹œ í• ë‹¹
+        // ¾À ¾È¿¡ ÀÖ´Â Placeµé ´Ù½Ã ÇÒ´ç
         allPlace = FindObjectsByType<AppearPlace>(FindObjectsSortMode.None).OrderBy(p => p.placeIndex).ToArray();
 
-        // ì¸ë²¤í† ë¦¬ UI ë‹¤ì‹œ ì°¾ê¸° (Tagë‚˜ ì´ë¦„ìœ¼ë¡œ ì°¾ì•„ì•¼ ì •í™•)
+        // ÀÎº¥Åä¸® UI ´Ù½Ã Ã£±â (Tag³ª ÀÌ¸§À¸·Î Ã£¾Æ¾ß Á¤È®)
         InventoryText = GameObject.Find("InventoryText")?.GetComponent<TextMeshProUGUI>();
 
         haveItem.Clear();
@@ -49,10 +47,10 @@ public class PlayerBehavior : MonoBehaviour
 
         InventoryText.alpha = 0f;
 
-        // ìŠ¬ë¡¯ ì„ íƒ ì´ˆê¸°í™”
+        // ½½·Ô ¼±ÅÃ ÃÊ±âÈ­
         SelectPlace(0);
 
-        // UI ì—…ë°ì´íŠ¸
+        // UI ¾÷µ¥ÀÌÆ®
         UpdateUI();
     }
 
@@ -110,7 +108,7 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
 
-        // íšŒìˆ˜ ë¡œì§
+        // È¸¼ö ·ÎÁ÷
         if (slot.installItem != null)
         {
             var item = slot.installItem.GetComponent<Pipe>();
@@ -122,13 +120,13 @@ public class PlayerBehavior : MonoBehaviour
 
             selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, haveItem.Count - 1);
 
-            // í¼ì¦ ì²´í¬
+            // ÆÛÁñ Ã¼Å©
             Puzzle2Manager.Instance.CheckPuzzle();
 
             return;
         }
 
-        // ë°°ì¹˜ ë¡œì§
+        // ¹èÄ¡ ·ÎÁ÷
         if (haveItem.Count == 0)
         {
             return;
@@ -151,7 +149,7 @@ public class PlayerBehavior : MonoBehaviour
         haveItem.RemoveAt(selectedItemIndex);
         selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, haveItem.Count - 1);
 
-        // í¼ì¦ ì²´í¬
+        // ÆÛÁñ Ã¼Å©
         Puzzle2Manager.Instance.CheckPuzzle();
     }
 
@@ -222,17 +220,17 @@ public class PlayerBehavior : MonoBehaviour
 
         if (haveItem.Count == 0)
         {
-            result = "íŒŒì´í”„ê°€ ë¹„ì–´ ìˆìŒ";
+            result = "ÆÄÀÌÇÁ°¡ ºñ¾î ÀÖÀ½";
         }
         else
         {
-            result = "ë³´ìœ  ì•„ì´í…œ: ";
+            result = "º¸À¯ ¾ÆÀÌÅÛ: ";
 
             for (int i = 0; i < haveItem.Count; i++)
             {
                 if (i == selectedItemIndex)
                 {
-                    result += "[" + haveItem[i] + "]";
+                    result += "[" + haveItem[i] + "] ";
                 }
                 else
                 {
@@ -240,7 +238,7 @@ public class PlayerBehavior : MonoBehaviour
                 }
             }
 
-            result += $"\nì„ íƒ ì¥ì†Œ: {selectPlaceIndex + 1}ë²ˆ";
+            result += $"\n¼±ÅÃ Àå¼Ò: {selectPlaceIndex + 1}¹ø";
         }
 
         InventoryText.text = result;
@@ -250,12 +248,6 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Puzzle2")
         {
-            keycount.alpha = 0f;
-
-            Color imageColor = keyImage.color;
-            imageColor.a = 0f;
-            keyImage.color = imageColor;
-
             InventoryText.alpha = 1f;
         }
     }

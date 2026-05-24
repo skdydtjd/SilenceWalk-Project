@@ -3,14 +3,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Puzzle3UIforPlayer : MonoBehaviour
+public class Puzzle4UIforPlayer : MonoBehaviour
 {
-    public static Puzzle3UIforPlayer Instance;
+    public static Puzzle4UIforPlayer Instance;
 
     public TextMeshProUGUI keycount;
     public Image keyImage;
-
-    public static int NumberOfKey = 0;
 
     private void OnEnable()
     {
@@ -24,8 +22,8 @@ public class Puzzle3UIforPlayer : MonoBehaviour
 
     void OnSceneLoaded(Scene newscene, LoadSceneMode mode)
     {
-        keycount = GameObject.Find("KeyCount")?.GetComponent<TextMeshProUGUI>();
-        keyImage = GameObject.Find("KeyImage")?.GetComponent<Image>();
+        keycount = GameObject.Find("KeyCountP4")?.GetComponent<TextMeshProUGUI>();
+        keyImage = GameObject.Find("KeyImageP4")?.GetComponent<Image>();
 
         keycount.alpha = 0f;
 
@@ -33,23 +31,21 @@ public class Puzzle3UIforPlayer : MonoBehaviour
         imageColor.a = 0f;
         keyImage.color = imageColor;
 
-        NumberOfKey = 0;
+        AppearKeyPuzzle4.KeyGatherCount = 0;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Puzzle3")
+        if (other.gameObject.tag == "Puzzle4")
         {
             keycount.alpha = 1f;
 
             Color imageColor = keyImage.color;
             imageColor.a = 1f;
             keyImage.color = imageColor;
-
-            PlayerBehavior.Instance.InventoryText.alpha = 0f;
         }
 
-        if (other.gameObject.tag == "Puzzle4")
+        if (other.gameObject.tag == "Puzzle3" || other.gameObject.tag == "BossRace")
         {
             keycount.alpha = 0f;
 
@@ -76,6 +72,6 @@ public class Puzzle3UIforPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        keycount.text = $"{NumberOfKey} / 3";
+        keycount.text = $"{AppearKeyPuzzle4.KeyGatherCount} / 2";
     }
 }
