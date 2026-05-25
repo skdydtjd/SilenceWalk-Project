@@ -112,4 +112,4 @@ https://play.unity.com/en/games/7b4b2685-3ecb-4f8d-bb34-e79b9eabbd38/silencewalk
 
 (2026.05.24 Update Version (v3)) (Recent)
 
-
+https://play.unity.com/ko/games/e57f9968-5a69-4889-9dbd-1efa261508c7/silencewalk-20260524-v3 (현재 OOM(Out of Memory) 오류가 있음)
