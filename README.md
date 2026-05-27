@@ -11,7 +11,7 @@
 4. UI Texture를 Sprite Atlas를 사용하여 Draw Call 최적화
 5. Puzzle4의 UI 추가
 
-## 수정한 부분 영상 (플레이 파일은 용량 문제로 Releases 링크로 변경)
+## 수정한 부분 영상 (v3 플레이 파일은 용량 문제로 Releases 링크로 변경)
 
 
 # 개발 기간
