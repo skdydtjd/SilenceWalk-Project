@@ -11,6 +11,9 @@
 4. UI Texture를 Sprite Atlas를 사용하여 Draw Call 최적화
 5. Puzzle4의 UI 추가
 
+## 수정한 부분 영상 (플레이 파일은 용량 문제로 Releases 링크로 변경)
+
+
 # 개발 기간
 
 2025.03.18 ~ 2025.06.10
@@ -109,9 +112,3 @@ https://play.unity.com/en/games/5c1df5d8-919b-4d8d-9caf-79b17480924c/silencewalk
 (2025.07.06 Update Version (v2))
 
 https://play.unity.com/en/games/7b4b2685-3ecb-4f8d-bb34-e79b9eabbd38/silencewalk-20250706-v2
-
-(2026.05.24 Update Version (v3)) (Recent)
-
-(현재 OOM(Out of Memory) 오류가 있음)
-
-https://play.unity.com/ko/games/55861366-5786-4777-828b-459bd042a152/silencewalk-20260524-v3
