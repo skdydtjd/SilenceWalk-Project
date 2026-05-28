@@ -5,7 +5,7 @@
 # 2026.05.24 (수정 Update)
 
 (AI활용)
-1. UI Quality UP
+1. UI Graphic Quality UP
 2. (ChatGPT, DOTween)을 이용한 UI 애니메이션 개선
 3. Global Volume를 활용한 PostProcessing 기술로 공포 분위기 연출 개선
 4. UI Texture를 Sprite Atlas를 사용하여 Draw Call 최적화
