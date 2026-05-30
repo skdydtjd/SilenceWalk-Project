@@ -2,18 +2,6 @@
 # 2025-1 캡스톤 디자인 프로젝트 Script 파일
 3D Horror, Escape, Puzzle Game
 
-# 2026.05.24 (수정 Update)
-
-(AI활용)
-1. UI Graphic Quality UP
-2. (ChatGPT, DOTween)을 이용한 UI 애니메이션 개선
-3. Global Volume를 활용한 PostProcessing 기술로 공포 분위기 연출 개선
-4. UI Texture를 Sprite Atlas를 사용하여 Draw Call 최적화
-5. Puzzle4의 UI 추가
-
-## 수정한 부분 영상 (v3 플레이 파일은 용량 문제로 Releases 링크로 변경)
-
-
 # 개발 기간
 
 2025.03.18 ~ 2025.06.10
@@ -112,3 +100,7 @@ https://play.unity.com/en/games/5c1df5d8-919b-4d8d-9caf-79b17480924c/silencewalk
 (2025.07.06 Update Version (v2))
 
 https://play.unity.com/en/games/7b4b2685-3ecb-4f8d-bb34-e79b9eabbd38/silencewalk-20250706-v2
+
+(2026.05.24 Update Version (v3))
+
+v3 플레이 파일은 용량 문제로 Releases 링크로 변경
