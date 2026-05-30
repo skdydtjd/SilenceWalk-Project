@@ -4,11 +4,15 @@
 
 # 2026.05.24 (수정 Update)
 
-1. UI Quality UP
+(AI활용)
+1. UI Graphic Quality UP
 2. (ChatGPT, DOTween)을 이용한 UI 애니메이션 개선
-3. Global Vloume를 활용한 PostProcessing 기술로 보다 공포분위기 그래픽을 개선
+3. Global Volume를 활용한 PostProcessing 기술로 공포 분위기 연출 개선
 4. UI Texture를 Sprite Atlas를 사용하여 Draw Call 최적화
 5. Puzzle4의 UI 추가
+
+## 수정한 부분 영상 (v3 플레이 파일은 용량 문제로 Releases 링크로 변경)
+
 
 # 개발 기간
 
@@ -108,7 +112,3 @@ https://play.unity.com/en/games/5c1df5d8-919b-4d8d-9caf-79b17480924c/silencewalk
 (2025.07.06 Update Version (v2))
 
 https://play.unity.com/en/games/7b4b2685-3ecb-4f8d-bb34-e79b9eabbd38/silencewalk-20250706-v2
-
-(2026.05.24 Update Version (v3)) (Recent)
-
-https://play.unity.com/en/games/81c0afc5-0e1f-4280-b150-af8df6d3145c/silencewalk-20260524-v3
