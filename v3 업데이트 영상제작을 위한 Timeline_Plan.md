@@ -1,5 +1,7 @@
 # Timeline 구성 계획
 
+## Chat GPT를 활용한 계획 작성
+
 목적: GitHub 포트폴리오용 Update v3 기능 시연 영상 제작
 
 공통 촬영 규칙:
