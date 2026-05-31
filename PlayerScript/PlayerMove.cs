@@ -21,9 +21,10 @@ public class PlayerMove : MonoBehaviour
     public float WalkSpeed = 3f;
     public float RunSpeed = 4.5f;
     public float jumpForce = 5f;
-
-    float jumpBufferTime = 0.3f;
-    float jumpBufferCounter = 0f;
+    public float groundCheckDistance = 0.4f;
+    public float groundCheckStartOffset = 0.1f;
+    public float groundCheckRadius = 0.25f;
+    public float jumpTriggerResetDelay = 0.15f;
 
     float gatherBufferTime = 1f;
     float gatherBufferCounter = 0f;
@@ -31,9 +32,10 @@ public class PlayerMove : MonoBehaviour
     public float hp = 100;
 
     bool Runtrigger;
-    bool jumpTrigger = false;
     bool gatherTrigger = false;
     bool hitTrigger = false;
+    bool isJumping = false;
+    float jumpTriggerResetTimer = 0f;
 
     public float hAix;
     public float vAix;
@@ -70,25 +72,49 @@ public class PlayerMove : MonoBehaviour
 
     void Jump()
     {
-        jumpBufferCounter = jumpBufferTime;
-
         AnimatorStateInfo stateInfo = playermove.GetCurrentAnimatorStateInfo(0);
+        bool canJump = !stateInfo.IsName("human_male_gathering_01") && !stateInfo.IsName("Push") && !isJumping && IsGrounded();
 
-        if (jumpBufferCounter > 0 && jumpTrigger)
+        if (!canJump)
         {
-            if (!stateInfo.IsName("human_male_gathering_01") && !stateInfo.IsName("Push"))
+            if (jumpTriggerResetTimer <= 0f)
             {
-                jumpTrigger = false;
-                rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                playermove.SetTrigger("Jump");
-                jumpBufferCounter = 0;
+                playermove.ResetTrigger("Jump");
+            }
+
+            return;
+        }
+
+        isJumping = true;
+        rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        playermove.SetTrigger("Jump");
+        jumpTriggerResetTimer = jumpTriggerResetDelay;
+    }
+
+    bool IsGrounded()
+    {
+        Vector3 origin = rigid.position + Vector3.up * groundCheckStartOffset;
+        Vector3[] checkPoints =
+        {
+            origin,
+            origin + transform.forward * groundCheckRadius,
+            origin - transform.forward * groundCheckRadius,
+            origin + transform.right * groundCheckRadius,
+            origin - transform.right * groundCheckRadius
+        };
+
+        foreach (Vector3 checkPoint in checkPoints)
+        {
+            if (Physics.Raycast(checkPoint, Vector3.down, out RaycastHit hit, groundCheckDistance))
+            {
+                if (hit.collider.CompareTag("prison") || hit.collider.CompareTag("outside"))
+                {
+                    return true;
+                }
             }
         }
 
-        if (jumpBufferCounter > 0)
-        {
-            jumpBufferCounter -= Time.deltaTime;
-        }
+        return false;
     }
 
     public bool NearWall()
@@ -117,12 +143,6 @@ public class PlayerMove : MonoBehaviour
     // 충돌 함수
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "prison" || collision.gameObject.tag == "outside")
-        {
-            Debug.Log("done");
-            jumpTrigger = true;
-        }
-
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("enemy");
@@ -233,6 +253,16 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (jumpTriggerResetTimer > 0f)
+        {
+            jumpTriggerResetTimer -= Time.fixedDeltaTime;
+        }
+
+        if (isJumping && IsGrounded() && rigid.linearVelocity.y <= 0f)
+        {
+            isJumping = false;
+        }
+
         if (hitTrigger)
         {
             playermove.SetTrigger("Hit");
